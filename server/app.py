@@ -4,39 +4,42 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def index():
-    return '<h1>Python Operations with Flask Routing and Views</h1>'
-
-@app.route('/print/<name>')
-def print_string(name):
-    print(name)
-    return name
-
-@app.route('/count/<int:param>')
-def count(param):
-    numbers='\n'.join(str(i) for i in range(param + 1))
-    return numbers
+    return "<h1>Python Operations with Flask Routing and Views</h1>"
 
 
-@app.route('/math/<float:num1><operation><float:num2>')
+@app.route("/print/<parameter>")
+def print_string(parameter):
+    print(parameter)
+    return parameter
+
+
+@app.route("/count/<int:num>")
+def count(num):
+    count = ""
+    for i in range(num+1):
+        count += f"{i}" + "\n"
+    return count
+
+
+@app.route("/math/<int:num1>/<operation>/<int:num2>")
 def math(num1, operation, num2):
     result = None
-    if operation == '+':
-        result = num1+ num2
-    elif operation == '-':
+    if operation == "+":
+        result = num1 + num2
+    elif operation == "-":
         result = num1 - num2
-    elif operation == '*':
+    elif operation == "*":
         result = num1 * num2
-    elif operation == '/':
+    elif operation == "div":
         result = num1 / num2
-    elif operation == '%':
+    elif operation == "%":
         result = num1 % num2
-    if result is not None:
-        return str(result)
-    else:
-        return 'Invalid operation'    
+
+    return str(result)
 
 
-if __name__ == '__main__':
+if __name__ == "main":
     app.run(port=5555, debug=True)
